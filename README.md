@@ -43,6 +43,23 @@ Engine: **Hybrid** (mặc định), **Claude (local)**, hoặc **So sánh** hai 
 
 Ô nhập nhận cả **OKR** nhiều dòng (`Objective:` / `O1:` / `Mục tiêu:`, `KR1:` / `Key Result:` / `Kết quả then chốt:`, gạch đầu dòng…); mỗi dòng được parse riêng và hiển thị theo Objective → Key Results. API tương ứng: `POST /v1/parse-okr`.
 
+### Gemini engine (mặc định khi có key)
+
+Copy `.env.example` → `.env` (đã gitignore), điền `GEMINI_API_KEY`, rồi chạy server với `--env-file .env`:
+
+```bash
+PYTHONPATH=src ARTIFACTS_DIR=artifacts/category/latest uvicorn intent_task_ai.api.app:app --port 8000 --env-file .env
+```
+
+| Env | Mặc định | Ý nghĩa |
+|-----|----------|---------|
+| `GEMINI_API_KEY` | — | bắt buộc để bật engine `gemini` |
+| `GEMINI_MODEL` | `gemini-3.1-flash-lite` | model Gemini |
+| `GEMINI_TIMEOUT_S` | `30` | timeout mỗi lần gọi |
+| `DEFAULT_ENGINE` | `hybrid` | engine dùng khi request không gửi `engine` (`hybrid`/`claude`/`gemini`); không khả dụng thì tự về `hybrid` |
+
+Lưu ý: engine `gemini` gửi nội dung văn bản đến Google API.
+
 ### Claude (local) engine — tuỳ chọn
 
 Dùng Claude Code CLI đã cài và đăng nhập trên máy (không cần `ANTHROPIC_API_KEY`):

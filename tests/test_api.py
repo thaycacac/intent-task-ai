@@ -41,7 +41,11 @@ def test_ui_served(client):
 
 def test_engines_endpoint(client, monkeypatch):
     monkeypatch.setattr(app_module, "claude_available", lambda: False)
-    assert client.get("/v1/engines").json() == {"hybrid": True, "claude": False}
+    monkeypatch.setattr(app_module, "gemini_available", lambda: False)
+    monkeypatch.delenv("DEFAULT_ENGINE", raising=False)
+    assert client.get("/v1/engines").json() == {
+        "hybrid": True, "claude": False, "gemini": False, "default": "hybrid",
+    }
 
 
 def test_hybrid_default_unchanged(client):
@@ -141,3 +145,76 @@ def test_parse_okr_claude(client, monkeypatch):
 def test_parse_okr_claude_unavailable(client, monkeypatch):
     monkeypatch.setattr(app_module, "claude_available", lambda: False)
     assert client.post("/v1/parse-okr", json={"text": OKR, "engine": "claude"}).status_code == 503
+
+
+def _gemini_response(data: dict):
+    import io
+
+    payload = {"candidates": [{"content": {"parts": [{"text": json.dumps(data)}]}}]}
+
+    class Resp(io.BytesIO):
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+    return Resp(json.dumps(payload).encode())
+
+
+@pytest.fixture()
+def gemini_env(monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    monkeypatch.setenv("GEMINI_MODEL", "gemini-test")
+    monkeypatch.setenv("DEFAULT_ENGINE", "gemini")
+
+
+def test_gemini_default_engine(client, monkeypatch, gemini_env):
+    from intent_task_ai.llm import gemini
+
+    seen = {}
+
+    def fake_urlopen(req, timeout=None, context=None):
+        seen["url"], seen["key"] = req.full_url, req.get_header("X-goog-api-key")
+        return _gemini_response(CLAUDE_DATA)
+
+    monkeypatch.setattr(gemini.urllib.request, "urlopen", fake_urlopen)
+    assert client.get("/v1/engines").json()["default"] == "gemini"
+    r = client.post("/v1/parse-task", json={"text": "Mai 9h họp sprint"})  # no engine -> default
+    assert r.status_code == 200
+    body = r.json()
+    assert body["engine"] == "gemini" and body["priority"] == "high"
+    assert body["explanations"]["category"] == "gemini:gemini-test"
+    assert seen["url"].endswith("/models/gemini-test:generateContent") and seen["key"] == "test-key"
+    # explicit engine still wins over the default
+    assert client.post("/v1/parse-task", json={"text": "Mai 9h họp", "engine": "hybrid"}).json()["engine"] == "hybrid"
+
+
+def test_gemini_okr(client, monkeypatch, gemini_env):
+    from intent_task_ai.llm import gemini
+
+    monkeypatch.setattr(gemini.urllib.request, "urlopen", lambda req, timeout=None, context=None: _gemini_response(CLAUDE_DATA))
+    r = client.post("/v1/parse-okr", json={"text": OKR})
+    assert r.status_code == 200 and r.json()["engine"] == "gemini"
+    assert len(r.json()["items"]) == 5
+
+
+def test_gemini_http_error_is_503_and_hides_key(client, monkeypatch, gemini_env):
+    import io
+    import urllib.error
+
+    from intent_task_ai.llm import gemini
+
+    def boom(req, timeout=None, context=None):
+        raise urllib.error.HTTPError(req.full_url, 429, "x", {}, io.BytesIO(b"quota test-key exceeded"))
+
+    monkeypatch.setattr(gemini.urllib.request, "urlopen", boom)
+    r = client.post("/v1/parse-task", json={"text": "x", "engine": "gemini"})
+    assert r.status_code == 503 and "429" in r.json()["detail"] and "test-key" not in r.json()["detail"]
+
+
+def test_gemini_not_configured(client, monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    assert client.post("/v1/parse-task", json={"text": "x", "engine": "gemini"}).status_code == 503
+    monkeypatch.setenv("DEFAULT_ENGINE", "gemini")
+    assert client.get("/v1/engines").json()["default"] == "hybrid"  # falls back when no key

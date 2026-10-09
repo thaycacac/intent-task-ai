@@ -8,14 +8,14 @@ from pydantic import BaseModel, Field
 
 Category = Literal["work", "personal", "errand", "learning", "health", "other"]
 Priority = Literal["low", "medium", "high", "urgent"]
-Engine = Literal["hybrid", "claude"]
+Engine = Literal["hybrid", "claude", "gemini"]
 
 
 class ParseTaskRequest(BaseModel):
     text: str = Field(..., min_length=1, max_length=2000)
     locale: str = "vi-VN"
     reference_time: Optional[datetime] = None
-    engine: Engine = "hybrid"
+    engine: Optional[Engine] = None  # None -> server DEFAULT_ENGINE (hybrid unless configured)
 
 
 class FieldConfidence(BaseModel):
@@ -39,7 +39,7 @@ class ParseOkrRequest(BaseModel):
     text: str = Field(..., min_length=1, max_length=8000)
     locale: str = "vi-VN"
     reference_time: Optional[datetime] = None
-    engine: Engine = "hybrid"
+    engine: Optional[Engine] = None
 
 
 class OkrItemResponse(BaseModel):
@@ -59,6 +59,8 @@ class ParseOkrResponse(BaseModel):
 class EnginesResponse(BaseModel):
     hybrid: bool
     claude: bool
+    gemini: bool
+    default: Engine
 
 
 class HealthResponse(BaseModel):

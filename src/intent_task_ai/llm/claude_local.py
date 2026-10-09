@@ -124,11 +124,13 @@ def _normalize_deadline(value: Any) -> str | None:
     return dt.astimezone(TZ).isoformat()
 
 
-def to_parse_result(data: dict[str, Any], text: str, locale: str, model: str) -> ParseResult:
+def to_parse_result(
+    data: dict[str, Any], text: str, locale: str, model: str, source: str = "claude_local"
+) -> ParseResult:
     category = data.get("category")
     priority = data.get("priority")
     conf = data.get("confidence") or {}
-    tag = f"claude_local:{model}"
+    tag = f"{source}:{model}"
     reasoning = str(data.get("reasoning") or "").strip()
     return ParseResult(
         category=category if category in CATEGORIES else "other",

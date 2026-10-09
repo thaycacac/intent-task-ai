@@ -101,6 +101,7 @@ button.link{background:none;border:0;color:var(--accent);cursor:pointer;font:inh
     <div class="row">
       <label class="f">Engine
         <span class="seg" id="engine">
+          <button type="button" data-v="gemini">Gemini</button>
           <button type="button" data-v="hybrid" class="on">Hybrid (ML + rules)</button>
           <button type="button" data-v="claude">Claude (local)</button>
           <button type="button" data-v="both">So sánh</button>
@@ -137,7 +138,7 @@ const SAMPLES = [
   "Buy groceries tomorrow evening",
   "Objective: Ra mắt tính năng thanh toán\nKR1: Hoàn thành thiết kế API trước thứ 6 tuần sau\nKR2: Gấp! sửa lỗi thanh toán trước 17h hôm nay\nKR3: Viết tài liệu hướng dẫn cho đội CS",
 ];
-let engine = "hybrid", engines = {hybrid: true, claude: false};
+let engine = "hybrid", engines = {hybrid: true, claude: false, gemini: false, default: "hybrid"};
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const store = {
@@ -173,11 +174,13 @@ async function init(){
     $("health").innerHTML = `<span class="dot ${h.status === "ok" ? "ok" : "bad"}"></span>${esc(h.status)} · v${esc(h.version)} · ${esc(h.category_model)}`;
   } catch { $("health").innerHTML = `<span class="dot bad"></span>API không phản hồi`; }
   try { engines = await (await fetch("/v1/engines")).json(); } catch {}
-  if (!engines.claude) {
-    document.querySelectorAll("#engine button").forEach((b) => {
-      if (b.dataset.v !== "hybrid") { b.disabled = true; b.title = "Không tìm thấy Claude CLI trên máy chủ (cài Claude Code và đăng nhập)"; }
-    });
-  }
+  const why = {gemini: "Chưa cấu hình GEMINI_API_KEY trên máy chủ", claude: "Không tìm thấy Claude CLI trên máy chủ (cài Claude Code và đăng nhập)", both: "Cần ít nhất một engine LLM"};
+  document.querySelectorAll("#engine button").forEach((b) => {
+    const ok = b.dataset.v === "both" ? llmEngine() !== null : engines[b.dataset.v];
+    b.disabled = !ok;
+    b.title = ok ? "" : why[b.dataset.v] || "";
+  });
+  setEngine(engines.default || "hybrid");
 }
 
 // rendering
@@ -210,7 +213,12 @@ async function call(eng){
   return data;
 }
 
-const LABEL = {hybrid: "Hybrid (ML + rules)", claude: "Claude (local)"};
+const LABEL = {hybrid: "Hybrid (ML + rules)", claude: "Claude (local)", gemini: "Gemini"};
+// LLM engine used for the "So sánh" mode: server default if it is an LLM, else any available one.
+function llmEngine(){
+  if (engines.default && engines.default !== "hybrid") return engines.default;
+  return engines.gemini ? "gemini" : engines.claude ? "claude" : null;
+}
 
 function renderOkr(list, out){
   const errs = list.map((e, i) => out[i].err ? `<p class="err">${LABEL[e]}: ${esc(out[i].err.message)}</p>` : "").join("");
@@ -235,7 +243,7 @@ function renderOkr(list, out){
 
 async function run(){
   if (!$("text").value.trim()) { $("text").focus(); return; }
-  const list = engine === "both" ? ["hybrid", "claude"] : [engine];
+  const list = engine === "both" ? ["hybrid", llmEngine()] : [engine];
   $("go").disabled = true;
   $("results").className = "results" + (list.length > 1 ? " two" : "");
   $("results").innerHTML = list.map((e) => `<article class="card res" id="r-${e}"><h2>${LABEL[e]}</h2><span class="spin"></span> đang xử lý…</article>`).join("");

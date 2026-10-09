@@ -25,7 +25,13 @@ from intent_task_ai.api.schemas import (
     ParseTaskRequest,
     ParseTaskResponse,
 )
-from intent_task_ai.llm import ClaudeUnavailable, claude_available, parse_with_claude
+from intent_task_ai.llm import (
+    ClaudeUnavailable,
+    claude_available,
+    gemini_available,
+    parse_with_claude,
+    parse_with_gemini,
+)
 from intent_task_ai.okr import split_okr
 from intent_task_ai.pipeline.parse import HybridParser, ParseResult
 
@@ -128,9 +134,23 @@ def root() -> RedirectResponse:
     return RedirectResponse("/ui/")
 
 
+def _default_engine() -> str:
+    value = os.getenv("DEFAULT_ENGINE", "hybrid").strip().lower()
+    return value if value in ("hybrid", "claude", "gemini") else "hybrid"
+
+
+def _engine_ready(engine: str) -> bool:
+    return {"hybrid": True, "claude": claude_available(), "gemini": gemini_available()}[engine]
+
+
 @app.get("/v1/engines", response_model=EnginesResponse)
 def engines() -> EnginesResponse:
-    return EnginesResponse(hybrid=True, claude=claude_available())
+    default = _default_engine()
+    if not _engine_ready(default):
+        default = "hybrid"
+    return EnginesResponse(
+        hybrid=True, claude=claude_available(), gemini=gemini_available(), default=default  # type: ignore[arg-type]
+    )
 
 
 def _to_response(result: ParseResult, engine: str) -> ParseTaskResponse:
@@ -146,7 +166,17 @@ def _to_response(result: ParseResult, engine: str) -> ParseTaskResponse:
 
 
 def _parse_one(text: str, engine: str, locale: str, reference_time: datetime | None) -> ParseTaskResponse:
-    """Parse one utterance with the chosen engine. Raises ClaudeUnavailable for engine=claude."""
+    """Parse one utterance with the chosen engine. Raises ClaudeUnavailable for LLM engines."""
+    if engine == "gemini":
+        _counters["parse_task_engine_gemini_total"] += 1
+        try:
+            return _to_response(
+                parse_with_gemini(text, locale=locale, reference_time=reference_time), "gemini"
+            )
+        except ClaudeUnavailable:  # GeminiUnavailable subclasses it
+            _counters["parse_task_engine_gemini_errors"] += 1
+            raise
+
     if engine == "claude":
         _counters["parse_task_engine_claude_total"] += 1
         try:
@@ -193,7 +223,7 @@ def _parse_one(text: str, engine: str, locale: str, reference_time: datetime | N
 @app.post("/v1/parse-task", response_model=ParseTaskResponse)
 def parse_task(body: ParseTaskRequest) -> ParseTaskResponse:
     try:
-        return _parse_one(body.text, body.engine, body.locale, body.reference_time)
+        return _parse_one(body.text, body.engine or _default_engine(), body.locale, body.reference_time)
     except ClaudeUnavailable as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
@@ -204,25 +234,26 @@ def parse_okr(body: ParseOkrRequest) -> ParseOkrResponse:
     items = split_okr(body.text)
     if not items:
         raise HTTPException(status_code=422, detail="no parseable lines")
-    if body.engine == "claude" and not claude_available():
-        raise HTTPException(status_code=503, detail="Claude CLI not found; install Claude Code and log in")
+    engine = body.engine or _default_engine()
+    if not _engine_ready(engine):
+        raise HTTPException(status_code=503, detail=f"engine {engine!r} is not configured on this server")
     _counters["parse_okr_total"] += 1
 
     def work(item) -> OkrItemResponse:
         start = time.perf_counter()
         out = OkrItemResponse(kind=item.kind, label=item.label, source_text=item.text)  # type: ignore[arg-type]
         try:
-            out.result = _parse_one(item.text, body.engine, body.locale, body.reference_time)
+            out.result = _parse_one(item.text, engine, body.locale, body.reference_time)
         except ClaudeUnavailable as exc:
             out.error = str(exc)
         out.latency_ms = int((time.perf_counter() - start) * 1000)
         return out
 
-    # Claude calls take seconds each, so fan out; hybrid is instant.
-    workers = min(4, len(items)) if body.engine == "claude" else 1
+    # LLM calls take seconds each, so fan out; hybrid is instant.
+    workers = min(4, len(items)) if engine != "hybrid" else 1
     with ThreadPoolExecutor(max_workers=workers) as pool:
         results = list(pool.map(work, items))
-    return ParseOkrResponse(engine=body.engine, items=results)
+    return ParseOkrResponse(engine=engine, items=results)  # type: ignore[arg-type]
 
 
 if STATIC_DIR.exists():
