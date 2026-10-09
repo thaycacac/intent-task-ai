@@ -1,0 +1,79 @@
+{
+  "total": 33042,
+  "by_category": {
+    "personal": 8042,
+    "work": 7502,
+    "learning": 5980,
+    "other": 5854,
+    "errand": 4564,
+    "health": 1100
+  },
+  "by_locale_category": {
+    "en-US": {
+      "personal": 4021,
+      "work": 3751,
+      "learning": 2990,
+      "other": 2927,
+      "errand": 2282,
+      "health": 550
+    },
+    "vi-VN": {
+      "personal": 4021,
+      "work": 3751,
+      "learning": 2990,
+      "other": 2927,
+      "errand": 2282,
+      "health": 550
+    }
+  },
+  "top_intents": {
+    "calendar_set": 2300,
+    "play_music": 1876,
+    "weather_query": 1710,
+    "general_quirky": 1658,
+    "calendar_query": 1588,
+    "qa_factoid": 1550,
+    "news_query": 1418,
+    "email_query": 1220,
+    "email_sendemail": 1062,
+    "datetime_query": 1004,
+    "calendar_remove": 852,
+    "social_post": 828,
+    "play_radio": 802,
+    "qa_definition": 758,
+    "cooking_recipe": 640,
+    "transport_query": 628,
+    "lists_query": 598,
+    "play_podcasts": 580,
+    "recommendation_events": 518,
+    "alarm_set": 508,
+    "lists_remove": 506,
+    "lists_createoradd": 482,
+    "recommendation_locations": 470,
+    "play_audiobook": 452,
+    "music_query": 438,
+    "iot_hue_lightoff": 426,
+    "qa_currency": 426,
+    "qa_stock": 404,
+    "transport_ticket": 374,
+    "iot_hue_lightchange": 366,
+    "alarm_query": 366,
+    "takeaway_query": 362,
+    "takeaway_order": 354,
+    "iot_coffee": 348,
+    "play_game": 338,
+    "email_querycontact": 338,
+    "music_likeness": 330,
+    "audio_volume_mute": 314,
+    "transport_traffic": 308,
+    "social_query": 302
+  },
+  "taxonomy": [
+    "work",
+    "personal",
+    "errand",
+    "learning",
+    "health",
+    "other"
+  ]
+}

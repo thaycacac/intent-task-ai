@@ -1,0 +1,228 @@
+openapi: 3.1.0
+info:
+  title: Intent Task AI
+  version: 0.1.0
+  description: >
+    Hybrid NLP service that parses free-text task utterances into structured
+    fields for DonDon quick-create. Category is model-backed (MASSIVE);
+    deadline, priority, and task_detail use rules/heuristics/normalizers.
+servers:
+  - url: http://localhost:8000
+    description: Local Docker Compose / uvicorn
+tags:
+  - name: parse
+  - name: ops
+paths:
+  /health:
+    get:
+      tags: [ops]
+      summary: Liveness/readiness
+      operationId: getHealth
+      responses:
+        "200":
+          description: Service is up and model artifacts are loadable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /metrics:
+    get:
+      tags: [ops]
+      summary: Simple Prometheus-style counters
+      operationId: getMetrics
+      responses:
+        "200":
+          description: Text exposition of request counters
+          content:
+            text/plain:
+              schema:
+                type: string
+  /v1/engines:
+    get:
+      tags: [ops]
+      summary: Which parse engines are usable on this host
+      operationId: getEngines
+      responses:
+        "200":
+          description: Engine availability
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [hybrid, claude]
+                properties:
+                  hybrid: {type: boolean}
+                  claude: {type: boolean, description: Local Claude Code CLI found on PATH}
+  /v1/parse-task:
+    post:
+      tags: [parse]
+      summary: Parse natural-language task text
+      operationId: parseTask
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ParseTaskRequest"
+            examples:
+              vi:
+                value:
+                  text: "Mai 9h họp sprint với team, ưu tiên cao"
+                  locale: vi-VN
+              en:
+                value:
+                  text: "Buy groceries tomorrow evening"
+                  locale: en-US
+      responses:
+        "200":
+          description: Parsed task fields
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParseTaskResponse"
+        "422":
+          description: Validation error
+        "503":
+          description: engine=claude requested but the local Claude CLI is unavailable or failed
+  /v1/parse-okr:
+    post:
+      tags: [parse]
+      summary: Parse a pasted OKR (objective + key results), one task per line
+      operationId: parseOkr
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [text]
+              properties:
+                text:
+                  type: string
+                  maxLength: 8000
+                  description: "Multi-line OKR. Markers understood: O1:, Objective:, Mục tiêu:, KR1:, Key Result:, Kết quả then chốt:, bullets. A single line is returned as one item of kind `task`."
+                locale: {type: string, default: vi-VN}
+                reference_time: {type: string, format: date-time}
+                engine: {type: string, enum: [hybrid, claude], default: hybrid}
+      responses:
+        "200":
+          description: One parsed item per OKR line (max 30)
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [engine, items]
+                properties:
+                  engine: {type: string, enum: [hybrid, claude]}
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      required: [kind, label, source_text]
+                      properties:
+                        kind: {type: string, enum: [objective, key_result, task]}
+                        label: {type: string, description: "O1, KR2, … or empty for task"}
+                        source_text: {type: string}
+                        result: {$ref: "#/components/schemas/ParseTaskResponse", nullable: true}
+                        error: {type: string, nullable: true}
+                        latency_ms: {type: integer}
+        "422":
+          description: Validation error or no parseable lines
+        "503":
+          description: engine=claude requested but the local Claude CLI is unavailable
+components:
+  schemas:
+    Category:
+      type: string
+      enum: [work, personal, errand, learning, health, other]
+    Priority:
+      type: string
+      enum: [low, medium, high, urgent]
+    ParseTaskRequest:
+      type: object
+      required: [text]
+      properties:
+        text:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: Free-text utterance
+        locale:
+          type: string
+          description: BCP-47 locale hint (default vi-VN)
+          default: vi-VN
+          examples: [vi-VN, en-US]
+        reference_time:
+          type: string
+          format: date-time
+          description: Optional ISO-8601 anchor for relative dates
+        engine:
+          type: string
+          enum: [hybrid, claude]
+          default: hybrid
+          description: hybrid = MASSIVE classifier + rules; claude = local Claude Code CLI (optional)
+    FieldConfidence:
+      type: object
+      required: [category, deadline, priority, task_detail]
+      properties:
+        category:
+          type: number
+          minimum: 0
+          maximum: 1
+        deadline:
+          type: number
+          minimum: 0
+          maximum: 1
+        priority:
+          type: number
+          minimum: 0
+          maximum: 1
+        task_detail:
+          type: number
+          minimum: 0
+          maximum: 1
+    ParseTaskResponse:
+      type: object
+      required:
+        - category
+        - deadline
+        - task_detail
+        - priority
+        - confidence
+        - explanations
+      properties:
+        category:
+          $ref: "#/components/schemas/Category"
+        deadline:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO-8601 datetime in Asia/Ho_Chi_Minh when present
+        task_detail:
+          type: string
+          description: Normalized task title / short description
+        priority:
+          $ref: "#/components/schemas/Priority"
+        confidence:
+          $ref: "#/components/schemas/FieldConfidence"
+        explanations:
+          type: object
+          additionalProperties:
+            type: string
+          description: Debug/audit strings per field (mapping, rules fired, etc.)
+        engine:
+          type: string
+          enum: [hybrid, claude]
+          default: hybrid
+    HealthResponse:
+      type: object
+      required: [status, version, category_model]
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded]
+        version:
+          type: string
+        category_model:
+          type: string
+          description: Loaded artifact version id

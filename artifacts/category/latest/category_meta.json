@@ -1,0 +1,12 @@
+{
+  "version": "v20260919T152718Z",
+  "labels": [
+    "errand",
+    "health",
+    "learning",
+    "other",
+    "personal",
+    "work"
+  ],
+  "backend": "sklearn-tfidf-lr"
+}

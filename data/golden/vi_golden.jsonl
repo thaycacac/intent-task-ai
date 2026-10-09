@@ -1,0 +1,55 @@
+{"id": "vi-001", "text": "Mai 9h họp sprint với team, ưu tiên cao", "deadline": "2026-09-20T09:00:00+07:00", "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-002", "text": "Hôm nay 14h gọi khách hàng quan trọng", "deadline": "2026-09-19T14:00:00+07:00", "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-003", "text": "Ngày mai lúc 8 giờ đưa con đi học", "deadline": "2026-09-20T08:00:00+07:00", "priority": "medium", "category_hint": "personal", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-004", "text": "Nhắc tôi uống thuốc lúc 20h hôm nay", "deadline": "2026-09-19T20:00:00+07:00", "priority": "medium", "category_hint": "health", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-005", "text": "Ngày kia 10h khám răng", "deadline": "2026-09-21T10:00:00+07:00", "priority": "medium", "category_hint": "health", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-006", "text": "Thứ hai 9h trình bày báo cáo, phải xong", "deadline": "2026-09-21T09:00:00+07:00", "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-007", "text": "Thứ sáu 18h mua đồ siêu thị", "deadline": "2026-09-25T18:00:00+07:00", "priority": "medium", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-008", "text": "Tuần sau nộp bài tập MLOps", "deadline": "2026-09-26T09:00:00+07:00", "priority": "medium", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-009", "text": "Trong 3 ngày hoàn thành slide thuyết trình, gấp lắm", "deadline": "2026-09-22T09:00:00+07:00", "priority": "urgent", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-010", "text": "Ngày 25/09 họp ban giám đốc lúc 15h", "deadline": "2026-09-25T15:00:00+07:00", "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-011", "text": "Mai 7 giờ sáng chạy bộ", "deadline": "2026-09-20T07:00:00+07:00", "priority": "medium", "category_hint": "health", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-012", "text": "Hôm nay 21h xem video bài giảng, khi nào rảnh", "deadline": "2026-09-19T21:00:00+07:00", "priority": "low", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-013", "text": "Ngày mai đặt xe taxi ra sân bay lúc 5h, khẩn cấp", "deadline": "2026-09-20T05:00:00+07:00", "priority": "urgent", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-014", "text": "Thứ tư 13h lunch với mentor", "deadline": "2026-09-23T13:00:00+07:00", "priority": "medium", "category_hint": "personal", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-015", "text": "Chủ nhật 10h học tiếng Anh online", "deadline": "2026-09-27T10:00:00+07:00", "priority": "medium", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-016", "text": "Mai 16:30 gửi email báo cáo tuần", "deadline": "2026-09-20T16:30:00+07:00", "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-017", "text": "Hôm nay lúc 11 giờ đặt đồ ăn trưa", "deadline": "2026-09-19T11:00:00+07:00", "priority": "medium", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-018", "text": "Ngày mốt 9h bảo dưỡng xe", "deadline": "2026-09-21T09:00:00+07:00", "priority": "medium", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-019", "text": "Thứ năm 8h đo huyết áp định kỳ", "deadline": "2026-09-24T08:00:00+07:00", "priority": "medium", "category_hint": "health", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-020", "text": "Tomorrow 9am sync with design team, high priority", "deadline": "2026-09-20T09:00:00+07:00", "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-021", "text": "Today at 3pm buy milk", "deadline": "2026-09-19T15:00:00+07:00", "priority": "medium", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-022", "text": "Next week finish the reading list, no rush", "deadline": "2026-09-26T09:00:00+07:00", "priority": "low", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-023", "text": "In 2 days submit homework ASAP", "deadline": "2026-09-21T09:00:00+07:00", "priority": "urgent", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-024", "text": "Friday 19h tối đi cafe với bạn", "deadline": "2026-09-25T19:00:00+07:00", "priority": "low", "category_hint": "personal", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-025", "text": "Mai 12h thanh toán hóa đơn điện", "deadline": "2026-09-20T12:00:00+07:00", "priority": "high", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-026", "text": "Hôm nay 17h họp retrospective, critical", "deadline": "2026-09-19T17:00:00+07:00", "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-027", "text": "Thứ bảy 9h đưa mẹ đi chợ", "deadline": "2026-09-26T09:00:00+07:00", "priority": "medium", "category_hint": "personal", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-028", "text": "Ngày 20/09/2026 phỏng vấn lúc 10h, phải xong CV", "deadline": "2026-09-20T10:00:00+07:00", "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-029", "text": "Sau 5 ngày tái khám, ưu tiên cao", "deadline": "2026-09-24T09:00:00+07:00", "priority": "high", "category_hint": "health", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-030", "text": "Mai lúc 6 giờ tối nấu cơm đãi khách", "deadline": "2026-09-20T18:00:00+07:00", "priority": "medium", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-031", "text": "Viết tài liệu API cho DonDon", "deadline": null, "priority": "medium", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-032", "text": "Mua thêm giấy in văn phòng", "deadline": null, "priority": "low", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-033", "text": "Đọc paper về intent classification", "deadline": null, "priority": "medium", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-034", "text": "Tập yoga buổi sáng thường xuyên", "deadline": null, "priority": "low", "category_hint": "health", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-035", "text": "Nhắn tin hỏi thăm bạn cũ", "deadline": null, "priority": "low", "category_hint": "personal", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-036", "text": "Refactor module auth, không gấp", "deadline": null, "priority": "low", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-037", "text": "Làm bài tập xác suất thống kê", "deadline": null, "priority": "medium", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-038", "text": "Sắp xếp lại tủ quần áo", "deadline": null, "priority": "low", "category_hint": "personal", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-039", "text": "Đặt lịch cắt tóc tuần này nếu có thời gian", "deadline": null, "priority": "low", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-040", "text": "Review pull request của teammate, quan trọng", "deadline": null, "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-041", "text": "Uống đủ nước mỗi ngày", "deadline": null, "priority": "medium", "category_hint": "health", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-042", "text": "Học thêm FastAPI và Docker", "deadline": null, "priority": "medium", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-043", "text": "Gửi lời cảm ơn mentor", "deadline": null, "priority": "low", "category_hint": "personal", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-044", "text": "Chuẩn bị slide pitch startup, gấp lắm", "deadline": null, "priority": "urgent", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-045", "text": "Mua vitamin tổng hợp", "deadline": null, "priority": "medium", "category_hint": "health", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-046", "text": "Dọn dẹp bàn làm việc", "deadline": null, "priority": "low", "category_hint": "personal", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-047", "text": "Nghiên cứu MASSIVE dataset mapping", "deadline": null, "priority": "medium", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-048", "text": "Gọi shipper lấy hàng, ASAP", "deadline": null, "priority": "urgent", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-049", "text": "Cập nhật README dự án", "deadline": null, "priority": "medium", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-050", "text": "Theo dõi giấc ngủ tốt hơn", "deadline": null, "priority": "low", "category_hint": "health", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-051", "text": "Luyện speaking tiếng Anh 15 phút", "deadline": null, "priority": "medium", "category_hint": "learning", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-052", "text": "Thanh toán tiền nhà tháng này, deadline", "deadline": null, "priority": "high", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-053", "text": "Chụp ảnh kỷ niệm gia đình", "deadline": null, "priority": "low", "category_hint": "personal", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-054", "text": "Viết unit test cho deadline extractor", "deadline": null, "priority": "high", "category_hint": "work", "reference_time": "2026-09-19T10:00:00+07:00"}
+{"id": "vi-055", "text": "Đặt pizza cho team building khi nào rảnh", "deadline": null, "priority": "low", "category_hint": "errand", "reference_time": "2026-09-19T10:00:00+07:00"}

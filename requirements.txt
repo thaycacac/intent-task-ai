@@ -1,0 +1,8 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.7.0
+scikit-learn>=1.5.0
+joblib>=1.4.0
+datasets>=2.14.0,<3.0.0
+numpy>=1.26.0
+python-dateutil>=2.9.0

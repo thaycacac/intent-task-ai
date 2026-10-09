@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intent Task AI</title>
+<style>
+:root{
+  --bg:#f6f7f9;--card:#fff;--text:#1b1f27;--muted:#6a7280;--border:#e3e6ec;--accent:#4f46e5;--accent-fg:#fff;
+  --low:#64748b;--medium:#2563eb;--high:#d97706;--urgent:#dc2626;--ok:#16a34a;--diff:#fef3c7;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12141a;--card:#1b1e27;--text:#e8eaf0;--muted:#9099a8;--border:#2c3040;--accent:#818cf8;--accent-fg:#12141a;--diff:#4a3d12;
+}}
+:root[data-theme="dark"]{
+  --bg:#12141a;--card:#1b1e27;--text:#e8eaf0;--muted:#9099a8;--border:#2c3040;--accent:#818cf8;--accent-fg:#12141a;--diff:#4a3d12;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--card)}
+header h1{font-size:18px;margin:0}
+header .meta{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:13px}
+header a{color:var(--accent);text-decoration:none}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--muted);margin-right:5px}
+.dot.ok{background:var(--ok)}.dot.bad{background:var(--urgent)}
+main{max-width:980px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
+textarea{width:100%;min-height:130px;resize:vertical;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}
+textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-top:12px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+select,input[type=datetime-local]{padding:7px 8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:var(--bg);color:var(--text);padding:7px 12px;font:inherit;cursor:pointer;border-right:1px solid var(--border)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--accent);color:var(--accent-fg)}
+.seg button:disabled{opacity:.45;cursor:not-allowed}
+.go{margin-left:auto;background:var(--accent);color:var(--accent-fg);border:0;border-radius:8px;padding:9px 20px;font:inherit;font-weight:600;cursor:pointer}
+.go:disabled{opacity:.6;cursor:wait}
+.hint{margin-top:6px;font-size:12px;color:var(--muted)}
+.hint code{font-size:11px;background:var(--bg);padding:0 4px;border-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{border:1px solid var(--border);background:var(--bg);color:var(--text);border-radius:999px;padding:3px 10px;font-size:13px;cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.results{display:grid;gap:16px}
+.results.two{grid-template-columns:1fr 1fr}
+.okr{display:grid;gap:14px}
+.okr .item{border:1px solid var(--border);border-radius:12px;background:var(--card);padding:14px}
+.okr .item.obj{border-left:4px solid var(--accent)}
+.okr .item.kr{margin-left:20px}
+.okr .src{display:flex;gap:8px;align-items:baseline;margin:0 0 10px;font-weight:600;word-break:break-word}
+.okr .lbl{font-size:12px;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:0 6px;white-space:nowrap}
+.okr .cols{display:grid;gap:12px}
+.okr .cols.two{grid-template-columns:1fr 1fr}
+.okr .cols .card{margin:0;background:var(--bg)}
+.okr .sum{color:var(--muted);font-size:13px}
+@media (max-width:720px){.okr .cols.two{grid-template-columns:1fr}.okr .item.kr{margin-left:8px}}
+@media (max-width:720px){.results.two{grid-template-columns:1fr}.go{margin-left:0;width:100%}}
+.res h2{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);display:flex;justify-content:space-between}
+.title{font-size:18px;font-weight:600;margin:0 0 12px;word-break:break-word}
+.kv{display:grid;grid-template-columns:90px 1fr;gap:8px 10px;align-items:center}
+.kv>.k{color:var(--muted);font-size:13px}
+.v{padding:2px 6px;border-radius:6px}
+.v.diff{background:var(--diff)}
+.badge{display:inline-block;padding:1px 10px;border-radius:999px;font-size:13px;font-weight:600;color:#fff}
+.badge.cat{background:var(--accent);color:var(--accent-fg)}
+.badge.low{background:var(--low)}.badge.medium{background:var(--medium)}.badge.high{background:var(--high)}.badge.urgent{background:var(--urgent)}
+.conf{display:flex;align-items:center;gap:6px;margin-top:2px}
+.bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.conf small{color:var(--muted);font-size:12px;min-width:34px;text-align:right}
+details{margin-top:12px;color:var(--muted);font-size:13px}
+details pre{white-space:pre-wrap;margin:6px 0 0;font:12px/1.5 ui-monospace,Menlo,monospace;color:var(--text)}
+.err{color:var(--urgent)}
+.hist h3{margin:0 0 8px;font-size:14px}
+.hist ul{list-style:none;margin:0;padding:0}
+.hist li{display:flex;gap:8px;align-items:center;padding:6px 0;border-top:1px solid var(--border);cursor:pointer;font-size:14px}
+.hist li:first-child{border-top:0}
+.hist li span.t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hist li small{color:var(--muted)}
+button.link{background:none;border:0;color:var(--accent);cursor:pointer;font:inherit;padding:0}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:s .8s linear infinite;vertical-align:-2px}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Intent Task AI</h1>
+  <div class="meta">
+    <span id="health"><span class="dot"></span>đang kiểm tra…</span>
+    <a href="/docs" target="_blank" rel="noopener">API docs</a>
+    <button class="link" id="theme" type="button" title="Đổi giao diện sáng/tối">◐</button>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <textarea id="text" maxlength="8000" placeholder="Nhập một câu (Mai 9h họp sprint với team, ưu tiên cao) hoặc dán cả OKR:&#10;Objective: Tăng trưởng người dùng Q4&#10;KR1: Hoàn thành onboarding mới vào thứ 6 tuần sau&#10;KR2: Gọi 50 khách hàng cũ trước mai" autofocus></textarea>
+    <div class="hint">Nhiều dòng sẽ được tách thành Objective / Key Result (nhận <code>O1:</code>, <code>KR1:</code>, <code>Mục tiêu:</code>, <code>Kết quả then chốt:</code>, gạch đầu dòng…), mỗi dòng được parse riêng.</div>
+    <div class="chips" id="samples"></div>
+    <div class="row">
+      <label class="f">Engine
+        <span class="seg" id="engine">
+          <button type="button" data-v="hybrid" class="on">Hybrid (ML + rules)</button>
+          <button type="button" data-v="claude">Claude (local)</button>
+          <button type="button" data-v="both">So sánh</button>
+        </span>
+      </label>
+      <label class="f">Locale
+        <select id="locale"><option>vi-VN</option><option>en-US</option></select>
+      </label>
+      <label class="f">Thời điểm tham chiếu (tuỳ chọn)
+        <input type="datetime-local" id="ref">
+      </label>
+      <button class="go" id="go" type="button">Parse <small>(Ctrl/⌘+Enter)</small></button>
+    </div>
+  </section>
+
+  <section id="results" class="results"></section>
+
+  <section class="card hist" id="histCard" hidden>
+    <h3>Lịch sử <button class="link" id="clear" type="button">xoá</button></h3>
+    <ul id="hist"></ul>
+  </section>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const SAMPLES = [
+  "Mai 9h họp sprint với team, ưu tiên cao",
+  "Hôm nay 14h gọi khách hàng quan trọng",
+  "Ngày mai lúc 8 giờ đưa con đi học",
+  "Gấp! nộp báo cáo trước 17h hôm nay",
+  "Cuối tuần mua rau và đồ ăn cho cả nhà",
+  "Thứ 6 đi khám răng lúc 10h",
+  "Ôn bài tiếng Anh khi rảnh",
+  "Buy groceries tomorrow evening",
+  "Objective: Ra mắt tính năng thanh toán\nKR1: Hoàn thành thiết kế API trước thứ 6 tuần sau\nKR2: Gấp! sửa lỗi thanh toán trước 17h hôm nay\nKR3: Viết tài liệu hướng dẫn cho đội CS",
+];
+let engine = "hybrid", engines = {hybrid: true, claude: false};
+
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store = {
+  get(k, d){ try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+
+// theme
+const applyTheme = (t) => { if (t) document.documentElement.dataset.theme = t; };
+applyTheme(store.get("theme", null));
+$("theme").onclick = () => {
+  const dark = document.documentElement.dataset.theme
+    ? document.documentElement.dataset.theme === "dark"
+    : matchMedia("(prefers-color-scheme:dark)").matches;
+  const t = dark ? "light" : "dark"; applyTheme(t); store.set("theme", t);
+};
+
+// samples
+$("samples").innerHTML = SAMPLES.map((s, i) => `<button type="button" class="chip" data-i="${i}">${s.includes("\n") ? "📋 Mẫu OKR" : esc(s)}</button>`).join("");
+$("samples").onclick = (e) => { const c = e.target.closest(".chip"); if (c) { $("text").value = SAMPLES[+c.dataset.i]; $("text").focus(); } };
+
+// engine toggle
+function setEngine(v){
+  engine = v;
+  document.querySelectorAll("#engine button").forEach((b) => b.classList.toggle("on", b.dataset.v === v));
+}
+$("engine").onclick = (e) => { const b = e.target.closest("button"); if (b && !b.disabled) setEngine(b.dataset.v); };
+
+// health + engines
+async function init(){
+  try {
+    const h = await (await fetch("/health")).json();
+    $("health").innerHTML = `<span class="dot ${h.status === "ok" ? "ok" : "bad"}"></span>${esc(h.status)} · v${esc(h.version)} · ${esc(h.category_model)}`;
+  } catch { $("health").innerHTML = `<span class="dot bad"></span>API không phản hồi`; }
+  try { engines = await (await fetch("/v1/engines")).json(); } catch {}
+  if (!engines.claude) {
+    document.querySelectorAll("#engine button").forEach((b) => {
+      if (b.dataset.v !== "hybrid") { b.disabled = true; b.title = "Không tìm thấy Claude CLI trên máy chủ (cài Claude Code và đăng nhập)"; }
+    });
+  }
+}
+
+// rendering
+const fmtDeadline = (d) => d ? new Date(d).toLocaleString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh", weekday: "short", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}) : "Không có";
+const conf = (n) => `<div class="conf"><div class="bar"><i style="width:${Math.round(n * 100)}%"></i></div><small>${Math.round(n * 100)}%</small></div>`;
+
+function card(title, r, other){
+  const diff = (f) => other && JSON.stringify(r[f]) !== JSON.stringify(other[f]) && f !== "task_detail" ? " diff" : "";
+  const ex = r.explanations || {};
+  return `<article class="card res"><h2><span>${esc(title)}</span><span>${r._ms} ms</span></h2>
+    <p class="title">${esc(r.task_detail)}</p>
+    <div class="kv">
+      <span class="k">Category</span><div><span class="v${diff("category")}"><span class="badge cat">${esc(r.category)}</span></span>${conf(r.confidence.category)}</div>
+      <span class="k">Priority</span><div><span class="v${diff("priority")}"><span class="badge ${esc(r.priority)}">${esc(r.priority)}</span></span>${conf(r.confidence.priority)}</div>
+      <span class="k">Deadline</span><div><span class="v${diff("deadline")}">${esc(fmtDeadline(r.deadline))}</span>${conf(r.confidence.deadline)}</div>
+    </div>
+    <details><summary>Giải thích &amp; JSON</summary><pre>${esc(Object.entries(ex).map(([k, v]) => `${k}: ${v}`).join("\n"))}\n\n${esc(JSON.stringify({category: r.category, deadline: r.deadline, task_detail: r.task_detail, priority: r.priority}, null, 2))}</pre></details>
+  </article>`;
+}
+
+async function call(eng){
+  const body = {text: $("text").value.trim(), locale: $("locale").value, engine: eng};
+  if ($("ref").value) body.reference_time = new Date($("ref").value).toISOString();
+  const t0 = performance.now();
+  const res = await fetch("/v1/parse-okr", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(typeof data.detail === "string" ? data.detail : `HTTP ${res.status}`);
+  data._ms = Math.round(performance.now() - t0);
+  data.items.forEach((it) => { if (it.result) it.result._ms = it.latency_ms; });
+  return data;
+}
+
+const LABEL = {hybrid: "Hybrid (ML + rules)", claude: "Claude (local)"};
+
+function renderOkr(list, out){
+  const errs = list.map((e, i) => out[i].err ? `<p class="err">${LABEL[e]}: ${esc(out[i].err.message)}</p>` : "").join("");
+  const base = out.find((o) => o.r)?.r.items;
+  if (!base) return `<div class="card">${errs}</div>`;
+  const counts = {objective: 0, key_result: 0};
+  base.forEach((it) => { if (it.kind in counts) counts[it.kind]++; });
+  const rows = base.map((it, idx) => {
+    const cols = list.map((e, i) => {
+      const o = out[i];
+      if (o.err) return `<article class="card res"><h2>${LABEL[e]}</h2><p class="err">Lỗi</p></article>`;
+      const x = o.r.items[idx];
+      if (x.error) return `<article class="card res"><h2>${LABEL[e]}</h2><p class="err">Lỗi: ${esc(x.error)}</p></article>`;
+      const other = list.length > 1 ? out[1 - i].r?.items[idx]?.result : null;
+      return card(LABEL[e], x.result, other);
+    }).join("");
+    const cls = it.kind === "objective" ? " obj" : it.kind === "key_result" ? " kr" : "";
+    return `<div class="item${cls}"><p class="src">${it.label ? `<span class="lbl">${esc(it.label)}</span>` : ""}<span>${esc(it.source_text)}</span></p><div class="cols${list.length > 1 ? " two" : ""}">${cols}</div></div>`;
+  }).join("");
+  return `<div class="okr">${errs}<p class="sum">${counts.objective} objective · ${counts.key_result} key result · ${base.length} dòng</p>${rows}</div>`;
+}
+
+async function run(){
+  if (!$("text").value.trim()) { $("text").focus(); return; }
+  const list = engine === "both" ? ["hybrid", "claude"] : [engine];
+  $("go").disabled = true;
+  $("results").className = "results" + (list.length > 1 ? " two" : "");
+  $("results").innerHTML = list.map((e) => `<article class="card res" id="r-${e}"><h2>${LABEL[e]}</h2><span class="spin"></span> đang xử lý…</article>`).join("");
+  const out = await Promise.all(list.map((e) => call(e).then((r) => ({r}), (err) => ({err}))));
+  const oks = out.filter((o) => o.r);
+  const single = oks.length && oks.every((o) => o.r.items.length === 1 && o.r.items[0].kind === "task");
+  if (single) {
+    list.forEach((e, i) => {
+      const o = out[i], other = out[1 - i]?.r?.items[0]?.result;
+      const it = o.r?.items[0];
+      $("r-" + e).outerHTML = o.err || it.error
+        ? `<article class="card res"><h2>${LABEL[e]}</h2><p class="err">Lỗi: ${esc(o.err?.message || it.error)}</p></article>`
+        : card(LABEL[e], it.result, list.length > 1 ? other : null);
+    });
+  } else {
+    $("results").className = "results";
+    $("results").innerHTML = renderOkr(list, out);
+  }
+  const first = out.find((o) => o.r?.items.some((it) => it.result))?.r.items.find((it) => it.result).result;
+  if (first) pushHistory(first, list.length > 1 ? "both" : engine);
+  $("go").disabled = false;
+}
+$("go").onclick = run;
+$("text").addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) run(); });
+
+// history
+function renderHistory(){
+  const h = store.get("history", []);
+  $("histCard").hidden = !h.length;
+  $("hist").innerHTML = h.map((x, i) => `<li data-i="${i}"><span class="t">${esc(x.text)}</span><small>${esc(x.engine)}</small><span class="badge cat">${esc(x.category)}</span><span class="badge ${esc(x.priority)}">${esc(x.priority)}</span></li>`).join("");
+}
+function pushHistory(r, eng){
+  const h = store.get("history", []);
+  h.unshift({text: $("text").value.trim(), engine: eng, category: r.category, priority: r.priority});
+  store.set("history", h.slice(0, 15)); renderHistory();
+}
+$("hist").onclick = (e) => {
+  const li = e.target.closest("li"); if (!li) return;
+  const x = store.get("history", [])[+li.dataset.i];
+  if (x) { $("text").value = x.text; if (!document.querySelector(`#engine button[data-v="${x.engine}"]`)?.disabled) setEngine(x.engine); }
+};
+$("clear").onclick = () => { store.set("history", []); renderHistory(); };
+
+renderHistory();
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      ARTIFACTS_DIR: /app/artifacts/category/latest
+      LOG_LEVEL: INFO
+    volumes:
+      # Hot-swap trained artifacts without rebuild
+      - ./artifacts:/app/artifacts:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 6

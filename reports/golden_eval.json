@@ -1,0 +1,509 @@
+{
+  "n": 55,
+  "deadline_exact_or_null_accuracy": 0.8909,
+  "priority_exact_accuracy": 0.7818,
+  "thresholds": {
+    "deadline": 0.7,
+    "priority": 0.6
+  },
+  "deadline_pass": true,
+  "priority_pass": true,
+  "reference_time": "2026-09-19T10:00:00+07:00",
+  "samples": [
+    {
+      "id": "vi-001",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-20T09:00:00+07:00",
+      "got_deadline": "2026-09-20T09:00:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-002",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-19T14:00:00+07:00",
+      "got_deadline": "2026-09-19T14:00:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-003",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-20T08:00:00+07:00",
+      "got_deadline": "2026-09-20T08:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-004",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-19T20:00:00+07:00",
+      "got_deadline": "2026-09-19T20:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-005",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-21T10:00:00+07:00",
+      "got_deadline": "2026-09-21T10:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-006",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-21T09:00:00+07:00",
+      "got_deadline": "2026-09-21T09:00:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-007",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-25T18:00:00+07:00",
+      "got_deadline": "2026-09-25T18:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-008",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-26T09:00:00+07:00",
+      "got_deadline": "2026-09-26T09:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-009",
+      "deadline_ok": false,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-22T09:00:00+07:00",
+      "got_deadline": "2026-09-22T03:00:00+07:00",
+      "expected_priority": "urgent",
+      "got_priority": "urgent"
+    },
+    {
+      "id": "vi-010",
+      "deadline_ok": false,
+      "priority_ok": false,
+      "expected_deadline": "2026-09-25T15:00:00+07:00",
+      "got_deadline": "2026-09-25T09:00:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-011",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-20T07:00:00+07:00",
+      "got_deadline": "2026-09-20T07:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-012",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-19T21:00:00+07:00",
+      "got_deadline": "2026-09-19T21:00:00+07:00",
+      "expected_priority": "low",
+      "got_priority": "low"
+    },
+    {
+      "id": "vi-013",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-20T05:00:00+07:00",
+      "got_deadline": "2026-09-20T05:00:00+07:00",
+      "expected_priority": "urgent",
+      "got_priority": "urgent"
+    },
+    {
+      "id": "vi-014",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-23T13:00:00+07:00",
+      "got_deadline": "2026-09-23T13:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-015",
+      "deadline_ok": false,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-27T10:00:00+07:00",
+      "got_deadline": "2026-09-20T10:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-016",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": "2026-09-20T16:30:00+07:00",
+      "got_deadline": "2026-09-20T16:30:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-017",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-19T11:00:00+07:00",
+      "got_deadline": "2026-09-19T11:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-018",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-21T09:00:00+07:00",
+      "got_deadline": "2026-09-21T09:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-019",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-24T08:00:00+07:00",
+      "got_deadline": "2026-09-24T08:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-020",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-20T09:00:00+07:00",
+      "got_deadline": "2026-09-20T09:00:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-021",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-19T15:00:00+07:00",
+      "got_deadline": "2026-09-19T15:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-022",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-26T09:00:00+07:00",
+      "got_deadline": "2026-09-26T09:00:00+07:00",
+      "expected_priority": "low",
+      "got_priority": "low"
+    },
+    {
+      "id": "vi-023",
+      "deadline_ok": false,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-21T09:00:00+07:00",
+      "got_deadline": "2026-09-21T02:00:00+07:00",
+      "expected_priority": "urgent",
+      "got_priority": "urgent"
+    },
+    {
+      "id": "vi-024",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": "2026-09-25T19:00:00+07:00",
+      "got_deadline": "2026-09-25T19:00:00+07:00",
+      "expected_priority": "low",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-025",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": "2026-09-20T12:00:00+07:00",
+      "got_deadline": "2026-09-20T12:00:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-026",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-19T17:00:00+07:00",
+      "got_deadline": "2026-09-19T17:00:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-027",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-26T09:00:00+07:00",
+      "got_deadline": "2026-09-26T09:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-028",
+      "deadline_ok": false,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-20T10:00:00+07:00",
+      "got_deadline": "2026-09-20T20:00:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-029",
+      "deadline_ok": false,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-24T09:00:00+07:00",
+      "got_deadline": "2026-09-24T05:00:00+07:00",
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-030",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": "2026-09-20T18:00:00+07:00",
+      "got_deadline": "2026-09-20T18:00:00+07:00",
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-031",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-032",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-033",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-034",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-035",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-036",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "low"
+    },
+    {
+      "id": "vi-037",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-038",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-039",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "low"
+    },
+    {
+      "id": "vi-040",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-041",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-042",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-043",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-044",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "urgent",
+      "got_priority": "urgent"
+    },
+    {
+      "id": "vi-045",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-046",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-047",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-048",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "urgent",
+      "got_priority": "urgent"
+    },
+    {
+      "id": "vi-049",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-050",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-051",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "medium",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-052",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-053",
+      "deadline_ok": true,
+      "priority_ok": false,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "medium"
+    },
+    {
+      "id": "vi-054",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "high",
+      "got_priority": "high"
+    },
+    {
+      "id": "vi-055",
+      "deadline_ok": true,
+      "priority_ok": true,
+      "expected_deadline": null,
+      "got_deadline": null,
+      "expected_priority": "low",
+      "got_priority": "low"
+    }
+  ]
+}

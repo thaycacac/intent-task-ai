@@ -1,0 +1,160 @@
+{
+  "n": 5948,
+  "accuracy": 0.9032,
+  "majority_baseline_accuracy": 0.2566,
+  "lift_over_majority": 0.6466,
+  "label_distribution": {
+    "health": 192,
+    "other": 1082,
+    "personal": 1526,
+    "errand": 790,
+    "learning": 1012,
+    "work": 1346
+  },
+  "per_class": {
+    "errand": {
+      "precision": 0.909,
+      "recall": 0.8975,
+      "f1": 0.9032,
+      "support": 790
+    },
+    "health": {
+      "precision": 0.9391,
+      "recall": 0.9635,
+      "f1": 0.9512,
+      "support": 192
+    },
+    "learning": {
+      "precision": 0.8051,
+      "recall": 0.9061,
+      "f1": 0.8526,
+      "support": 1012
+    },
+    "other": {
+      "precision": 0.9317,
+      "recall": 0.9335,
+      "f1": 0.9326,
+      "support": 1082
+    },
+    "personal": {
+      "precision": 0.9261,
+      "recall": 0.8539,
+      "f1": 0.8885,
+      "support": 1526
+    },
+    "work": {
+      "precision": 0.9306,
+      "recall": 0.9272,
+      "f1": 0.9289,
+      "support": 1346
+    }
+  },
+  "model_version": "v20260919T152718Z",
+  "split": "data/processed/test.jsonl",
+  "by_locale": {
+    "en-US": {
+      "n": 2974,
+      "accuracy": 0.8981,
+      "majority_baseline_accuracy": 0.2566,
+      "lift_over_majority": 0.6416,
+      "label_distribution": {
+        "health": 96,
+        "other": 541,
+        "personal": 763,
+        "errand": 395,
+        "learning": 506,
+        "work": 673
+      },
+      "per_class": {
+        "errand": {
+          "precision": 0.8987,
+          "recall": 0.8759,
+          "f1": 0.8872,
+          "support": 395
+        },
+        "health": {
+          "precision": 0.94,
+          "recall": 0.9792,
+          "f1": 0.9592,
+          "support": 96
+        },
+        "learning": {
+          "precision": 0.7819,
+          "recall": 0.9071,
+          "f1": 0.8399,
+          "support": 506
+        },
+        "other": {
+          "precision": 0.9282,
+          "recall": 0.9316,
+          "f1": 0.9299,
+          "support": 541
+        },
+        "personal": {
+          "precision": 0.935,
+          "recall": 0.848,
+          "f1": 0.8893,
+          "support": 763
+        },
+        "work": {
+          "precision": 0.931,
+          "recall": 0.9227,
+          "f1": 0.9269,
+          "support": 673
+        }
+      }
+    },
+    "vi-VN": {
+      "n": 2974,
+      "accuracy": 0.9082,
+      "majority_baseline_accuracy": 0.2566,
+      "lift_over_majority": 0.6516,
+      "label_distribution": {
+        "health": 96,
+        "other": 541,
+        "personal": 763,
+        "errand": 395,
+        "learning": 506,
+        "work": 673
+      },
+      "per_class": {
+        "errand": {
+          "precision": 0.919,
+          "recall": 0.919,
+          "f1": 0.919,
+          "support": 395
+        },
+        "health": {
+          "precision": 0.9381,
+          "recall": 0.9479,
+          "f1": 0.943,
+          "support": 96
+        },
+        "learning": {
+          "precision": 0.8297,
+          "recall": 0.9051,
+          "f1": 0.8658,
+          "support": 506
+        },
+        "other": {
+          "precision": 0.9353,
+          "recall": 0.9353,
+          "f1": 0.9353,
+          "support": 541
+        },
+        "personal": {
+          "precision": 0.9175,
+          "recall": 0.8598,
+          "f1": 0.8877,
+          "support": 763
+        },
+        "work": {
+          "precision": 0.9303,
+          "recall": 0.9316,
+          "f1": 0.931,
+          "support": 673
+        }
+      }
+    }
+  }
+}
